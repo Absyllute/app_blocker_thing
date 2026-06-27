@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
       ),
 
       darkTheme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple, brightness: .dark),
+        colorScheme: .fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: .dark, //
+        ),
       ),
 
       home: HomeScreen(),
