@@ -32,6 +32,12 @@ class HomeScreen extends StatelessWidget {
                   PermissionHandler.notificationPermissionRequest(context),
               child: Text('Check Notification Permission'),
             ),
+
+            ElevatedButton(
+              onPressed: () =>
+                  PermissionHandler.usageStatsPermissionRequest(context),
+              child: Text('Check Usage Stats Permission'),
+            ),
           ],
         ),
       ),
