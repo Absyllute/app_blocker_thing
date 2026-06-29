@@ -1,4 +1,4 @@
-import 'package:app_blocker_thing/home_screen.dart';
+import 'package:app_blocker_thing/home/home_screen.dart';
 import 'package:app_blocker_thing/permission-management/dialogues/overlay_permission_dialogue.dart';
 import 'package:app_blocker_thing/permission-management/dialogues/usage_stats_dialogue.dart';
 import 'package:flutter/material.dart';

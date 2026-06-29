@@ -1,13 +1,18 @@
-import 'package:app_blocker_thing/info_dialogue.dart';
+import 'package:app_blocker_thing/home/info_dialogue.dart';
 import 'package:app_blocker_thing/permission-management/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:zo_app_blocker/zo_app_blocker.dart';
 
 final appBlock = ZoAppBlocker.instance;
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const new({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,4 @@
-import 'package:app_blocker_thing/home_screen.dart';
+import 'package:app_blocker_thing/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class OverlayPermissionDialogue {
