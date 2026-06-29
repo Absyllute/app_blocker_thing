@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class UsageStatsDialogue {
   static void show(BuildContext context) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Usage Stats Permission Required.'),

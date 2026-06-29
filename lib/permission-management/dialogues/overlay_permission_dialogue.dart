@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class OverlayPermissionDialogue {
   static void show(BuildContext context) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
