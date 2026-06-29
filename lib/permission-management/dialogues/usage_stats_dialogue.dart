@@ -17,6 +17,8 @@ class UsageStatsDialogue {
           ElevatedButton(
             onPressed: () async {
               await appBlock.requestUsageStatsPermission();
+
+              if (context.mounted) Navigator.of(context).pop();
             },
             child: Text('Go to System Settings'),
           ),
