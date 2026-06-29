@@ -10,7 +10,8 @@ class OverlayPermissionDialogue {
         return AlertDialog(
           title: Text('Overlay Permission Required'),
           content: Text(
-            'In order for an overlay to be displayed, we need the "appear over other apps" permission.',
+            'In order for an overlay to be displayed, we need the "appear over other apps" permission. This is a REQUIRED permission.'
+            'We\'ll redirect you to your System Settings to grant these permissions.',
           ),
           actions: [
             ElevatedButton(

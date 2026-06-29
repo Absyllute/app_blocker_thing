@@ -11,7 +11,7 @@ class UsageStatsDialogue {
 
         content: Text(
           'In order to detect when the blocked app is opened, we need Usage Stats '
-          "Permission. We'll redirect you to your System Settings to grant these permissions.",
+          "Permission. This is a REQUIRED permission. We'll redirect you to your System Settings to grant these permissions.",
         ),
 
         actions: [
