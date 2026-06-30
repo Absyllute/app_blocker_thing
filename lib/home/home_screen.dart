@@ -1,5 +1,4 @@
 import 'package:app_blocker_thing/home/info_dialogue.dart';
-import 'package:app_blocker_thing/permission-management/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:zo_app_blocker/zo_app_blocker.dart';
 
@@ -31,19 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: .center,
-          children: [
-            ElevatedButton(
-              onPressed: () =>
-                  PermissionHandler.usageStatsPermissionRequest(context),
-              child: Text('Check Usage Stats Permission'),
-            ),
-
-            ElevatedButton(
-              onPressed: () =>
-                  PermissionHandler.overlayPermissionRequest(context),
-              child: Text('Check Overlay Permission'),
-            ),
-          ],
+          children: [Text('You\'re supposed to pick an app to block here.')],
         ),
       ),
     );
