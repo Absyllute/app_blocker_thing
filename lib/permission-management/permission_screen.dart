@@ -1,6 +1,7 @@
 // if you think my code looks weird, its because of the built in flutter code formatting that i tried fighting with
 
 import 'package:app_blocker_thing/home/home_screen.dart';
+import 'package:app_blocker_thing/main.dart';
 import 'package:flutter/material.dart';
 
 class PermissionScreen extends StatefulWidget {
@@ -261,7 +262,7 @@ class PermissionScreenState extends State<PermissionScreen>
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => setState(() {}),
+                        onPressed: () => appRestartNotifier.value++,
                         child: Text('Finish'),
                       ),
                     );

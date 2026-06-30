@@ -1,6 +1,10 @@
 import 'package:app_blocker_thing/initial_screen.dart';
 import 'package:flutter/material.dart';
 
+final ValueNotifier<int> appRestartNotifier = ValueNotifier<int>(
+  0,
+); // when this value changes, that whole app restarts
+
 void main() {
   runApp(const MyApp());
 }
@@ -26,7 +30,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: InitialScreen(),
+      home: ValueListenableBuilder<int>(
+        valueListenable: appRestartNotifier,
+        builder: (context, value, child) {
+          return InitialScreen(key: ValueKey(value));
+        },
+      ),
     );
   }
 }
