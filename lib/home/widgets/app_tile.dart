@@ -38,19 +38,25 @@ class _AppTileState extends State<AppTile> {
         ),
         child: Row(
           children: [
-            Column(
-              crossAxisAlignment: .start,
-              children: [
-                Text(
-                  widget.app['appName'],
-                  style: TextStyle(fontSize: 18, fontWeight: .bold),
-                ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  Text(
+                    widget.app['appName'],
+                    style: TextStyle(fontSize: 18, fontWeight: .bold),
+                    overflow: .ellipsis,
+                    maxLines: 1,
+                  ),
 
-                Text(widget.app['packageName']),
-              ],
+                  Text(
+                    widget.app['packageName'],
+                    overflow: .ellipsis,
+                    maxLines: 1,
+                  ),
+                ],
+              ),
             ),
-
-            Spacer(),
 
             Switch(
               value: _isBlocked,
