@@ -12,12 +12,40 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Set<String> _selectedApps = {};
+  Future<List<Map<String, dynamic>>> installedAppsFuture() async {
+    return await appBlock.getApps();
+  }
+
+  void _toggleApp(String packageName) {
+    if (_selectedApps.contains(packageName)) {
+      _selectedApps.remove(packageName);
+    } else {
+      _selectedApps.add(packageName);
+    }
+  }
+
+  Future<void> applyBlocklist() async {
+    if (_selectedApps.isEmpty) {
+      await appBlock.unblockAll();
+      return;
+    }
+
+    await appBlock.blockApps(_selectedApps.toList());
+    return;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('App Blocker Thing'),
         actions: [
+          IconButton(
+            onPressed: () => applyBlocklist(),
+            icon: Icon(Icons.check),
+          ),
+
           IconButton(
             onPressed: () {
               InfoDialogue.show(context);
@@ -27,11 +55,44 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [Text('You\'re supposed to pick an app to block here.')],
-        ),
+      body: FutureBuilder(
+        future: installedAppsFuture(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(
+              child: Text(
+                'Error: No Apps Found, this could be because of insufficient permissions',
+              ),
+            );
+          }
+
+          final apps = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: apps.length,
+            itemBuilder: (context, index) {
+              final app = apps[index];
+              final String packageName = app['packageName'] ?? '';
+              final String appName = app['appName'] ?? 'Unknown App';
+              bool isBlocked = _selectedApps.contains(packageName);
+
+              return ListTile(
+                title: Text(appName),
+                subtitle: Text(packageName),
+                trailing: Switch(
+                  value: isBlocked,
+                  onChanged: (value) => _toggleApp(packageName),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
