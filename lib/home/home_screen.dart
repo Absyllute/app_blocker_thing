@@ -1,4 +1,5 @@
 import 'package:app_blocker_thing/home/info_dialogue.dart';
+import 'package:app_blocker_thing/home/widgets/app_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:zo_app_blocker/zo_app_blocker.dart';
 
@@ -79,16 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               final app = apps[index];
               final String packageName = app['packageName'] ?? '';
-              final String appName = app['appName'] ?? 'Unknown App';
               bool isBlocked = _selectedApps.contains(packageName);
 
-              return ListTile(
-                title: Text(appName),
-                subtitle: Text(packageName),
-                trailing: Switch(
-                  value: isBlocked,
-                  onChanged: (value) => _toggleApp(packageName),
-                ),
+              return AppTile(
+                app: app,
+                isInitialyBlocked: isBlocked,
+                onTapped: () {
+                  _toggleApp(packageName);
+                },
               );
             },
           );
