@@ -1,3 +1,4 @@
+import 'package:app_blocker_thing/home/loading_screen.dart';
 import 'package:app_blocker_thing/home/widgets/app_tile.dart';
 import 'package:app_blocker_thing/home/widgets/info_dialogue.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Set<String> _selectedApps = {};
   Future<List<Map<String, dynamic>>> installedAppsFuture() async {
+    Future.delayed(Duration(seconds: 3));
     return await appBlock.getApps();
   }
 
@@ -81,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         future: installedAppsFuture(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return LoadingScreen();
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
