@@ -1,5 +1,5 @@
-import 'package:app_blocker_thing/home/info_dialogue.dart';
 import 'package:app_blocker_thing/home/widgets/app_tile.dart';
+import 'package:app_blocker_thing/home/widgets/info_dialogue.dart';
 import 'package:flutter/material.dart';
 import 'package:zo_app_blocker/zo_app_blocker.dart';
 
