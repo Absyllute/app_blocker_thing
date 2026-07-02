@@ -29,10 +29,36 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> applyBlocklist() async {
     if (_selectedApps.isEmpty) {
       await appBlock.unblockAll();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Unblocked all apps',
+              style: TextStyle(color: Colors.white),
+              textAlign: .center,
+            ),
+            backgroundColor: Colors.grey[900],
+          ),
+        );
+      }
       return;
     }
 
     await appBlock.blockApps(_selectedApps.toList());
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Blocked ${_selectedApps.length} apps!',
+            style: TextStyle(color: Colors.white),
+            textAlign: .center,
+          ),
+          backgroundColor: Colors.grey[900],
+        ),
+      );
+    }
     return;
   }
 
