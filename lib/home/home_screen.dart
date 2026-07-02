@@ -43,11 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('App Blocker Thing'),
         actions: [
           IconButton(
-            onPressed: () => applyBlocklist(),
-            icon: Icon(Icons.check),
-          ),
-
-          IconButton(
             onPressed: () {
               InfoDialogue.show(context);
             },
@@ -92,6 +87,17 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
         },
+      ),
+
+      bottomNavigationBar: Padding(
+        padding: .all(12.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () => applyBlocklist(),
+            child: Text('Block / Unblock Apps'),
+          ),
+        ),
       ),
     );
   }
