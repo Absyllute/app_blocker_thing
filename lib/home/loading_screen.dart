@@ -1,5 +1,7 @@
 // This took me 3+ hours to animate ts 😭😭😭
 
+import 'dart:math' as math;
+
 import 'package:app_blocker_thing/home/widgets/loading_dot.dart';
 import 'package:flutter/material.dart';
 
@@ -29,13 +31,11 @@ class _LoadingScreenState extends State<LoadingScreen>
     super.dispose();
   }
 
+  // Grade 9 math did *NOT* prepare me for ts 🥀
   double _getWaveY(double delay) {
-    double value = _animationController.value + delay;
+    double angle = (_animationController.value + delay) * 2 * math.pi;
 
-    if (value >= 1) value -= 1;
-
-    double bounce = (Curves.easeInOut.transform(value) * 2 - 1).abs();
-    return bounce * -12;
+    return ((math.sin(angle) - 1) / 2) * 12;
   }
 
   @override
