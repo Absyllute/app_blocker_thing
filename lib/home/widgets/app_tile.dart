@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:app_blocker_thing/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppTile extends StatefulWidget {
@@ -19,6 +22,16 @@ class AppTile extends StatefulWidget {
 class _AppTileState extends State<AppTile> {
   late bool _isBlocked;
 
+  Future<Uint8List?> appIcon(String packageName) async {
+    final icon = await appBlock.getAppIcon(widget.app['packageName']);
+
+    if (icon != null) {
+      return icon;
+    }
+
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +51,28 @@ class _AppTileState extends State<AppTile> {
         ),
         child: Row(
           children: [
+            FutureBuilder(
+              future: appIcon(widget.app['packageName']),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == .waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                if (snapshot.hasData && snapshot.data != null) {
+                  return Row(
+                    children: [
+                      Image.memory(snapshot.data!, width: 48, height: 48),
+                      SizedBox(width: 6),
+                    ],
+                  );
+                }
+
+                return Row(
+                  children: [Icon(Icons.android, size: 48), SizedBox(width: 6)],
+                );
+              },
+            ),
+
             Expanded(
               child: Column(
                 crossAxisAlignment: .start,
