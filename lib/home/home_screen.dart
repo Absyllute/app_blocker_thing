@@ -45,6 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return await appBlock.getApps();
   }
 
+  // DO NOT CALL SETSTATE HERE. setstate already gets called in AppTile().
+  // If you call setstate in the homeScreen, it cause ALL the app icons to reload, which makes a CircularProgressIndicator() appear for a split second (which looks bad).
+  // I will cache the app icons at some point (that day is not today tho)
   void _toggleApp(String packageName) {
     if (_selectedApps.contains(packageName)) {
       _selectedApps.remove(packageName);
