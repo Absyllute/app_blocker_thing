@@ -15,6 +15,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Set<String> _selectedApps = {};
+  bool isLoading = true;
+  String? errorMessage;
+
+  List<Map<String, dynamic>> _allApps = [];
+
+  Future<void> loadApps() async {
+    try {
+      final apps = await appBlock.getApps();
+
+      setState(() {
+        _allApps = apps;
+        isLoading = false;
+      });
+    } catch (catchError) {
+      errorMessage = catchError.toString();
+      isLoading = false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadApps();
+  }
+
   Future<List<Map<String, dynamic>>> installedAppsFuture() async {
     Future.delayed(Duration(seconds: 3));
     return await appBlock.getApps();
@@ -66,6 +91,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget body;
+    if (_allApps.isNotEmpty) {
+      body = ListView.builder(
+        itemCount: _allApps.length,
+        itemBuilder: (context, index) {
+          final app = _allApps[index];
+          final String packageName = app['packageName'] ?? '';
+          bool isBlocked = _selectedApps.contains(packageName);
+
+          return AppTile(
+            app: app,
+            isInitialyBlocked: isBlocked,
+            onTapped: () => _toggleApp(packageName),
+          );
+        },
+      );
+    } else if (isLoading) {
+      body = const LoadingScreen();
+    } else if (errorMessage != null) {
+      body = Center(child: Text('Error: $errorMessage'));
+    } else {
+      body = const Center(child: Text('Error: Apps Not Found'));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('App Blocker Thing'),
@@ -76,47 +125,16 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: Icon(Icons.info_outline),
           ),
+
+          IconButton(
+            onPressed: () {
+              setState(() {});
+            },
+            icon: Icon(Icons.android),
+          ),
         ],
       ),
-
-      body: FutureBuilder(
-        future: installedAppsFuture(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return LoadingScreen();
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text(
-                'Error: No Apps Found, this could be because of insufficient permissions',
-              ),
-            );
-          }
-
-          final apps = snapshot.data!;
-
-          return ListView.builder(
-            itemCount: apps.length,
-            itemBuilder: (context, index) {
-              final app = apps[index];
-              final String packageName = app['packageName'] ?? '';
-              bool isBlocked = _selectedApps.contains(packageName);
-
-              return AppTile(
-                app: app,
-                isInitialyBlocked: isBlocked,
-                onTapped: () {
-                  _toggleApp(packageName);
-                },
-              );
-            },
-          );
-        },
-      ),
-
+      body: body,
       bottomNavigationBar: Padding(
         padding: .all(12.0),
         child: SizedBox(
