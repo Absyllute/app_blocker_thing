@@ -125,13 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: Icon(Icons.info_outline),
           ),
-
-          IconButton(
-            onPressed: () {
-              setState(() {});
-            },
-            icon: Icon(Icons.android),
-          ),
         ],
       ),
       body: body,
