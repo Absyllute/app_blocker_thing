@@ -1,7 +1,7 @@
-import 'package:app_blocker_thing/home/loading_screen.dart';
 import 'package:app_blocker_thing/home/widgets/app_tile.dart';
 import 'package:app_blocker_thing/home/widgets/info_dialogue.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:zo_app_blocker/zo_app_blocker.dart';
 
 final appBlock = ZoAppBlocker.instance;
@@ -111,7 +111,20 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       );
     } else if (isLoading) {
-      body = const LoadingScreen();
+      body = Center(
+        child: Column(
+          mainAxisAlignment: .center,
+          spacing: 12,
+          children: [
+            LoadingAnimationWidget.threeArchedCircle(
+              color: Theme.of(context).colorScheme.inversePrimary,
+              size: 64,
+            ),
+
+            Text('Loading Your Apps...'),
+          ],
+        ),
+      );
     } else if (errorMessage != null) {
       body = Center(child: Text('Error: $errorMessage'));
     } else {
