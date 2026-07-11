@@ -20,22 +20,26 @@ class AppTile extends StatefulWidget {
 }
 
 class _AppTileState extends State<AppTile> {
-  late bool _isBlocked;
+  late Future<Uint8List?> _appIconFuture;
 
   Future<Uint8List?> appIcon(String packageName) async {
     final icon = await appBlock.getAppIcon(widget.app['packageName']);
-
-    if (icon != null) {
-      return icon;
-    }
-
-    return null;
+    return icon;
   }
 
   @override
   void initState() {
     super.initState();
-    _isBlocked = widget.isInitialyBlocked;
+    _appIconFuture = appIcon(widget.app['packageName']);
+  }
+
+  @override
+  void didUpdateWidget(covariant AppTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.app['packageName'] != widget.app['packageName']) {
+      _appIconFuture = appIcon(widget.app['packageName']);
+    }
   }
 
   @override
@@ -52,7 +56,7 @@ class _AppTileState extends State<AppTile> {
         child: Row(
           children: [
             FutureBuilder(
-              future: appIcon(widget.app['packageName']),
+              future: _appIconFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == .waiting) {
                   return CircularProgressIndicator();
@@ -94,11 +98,8 @@ class _AppTileState extends State<AppTile> {
             ),
 
             Switch(
-              value: _isBlocked,
+              value: widget.isInitialyBlocked,
               onChanged: (value) {
-                setState(() {
-                  _isBlocked = value;
-                });
                 widget.onTapped();
               },
             ),
