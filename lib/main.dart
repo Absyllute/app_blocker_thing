@@ -21,12 +21,22 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
           brightness: .light,
         ),
+
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: Color(0xFFFDF7FF),
+          contentTextStyle: TextStyle(color: Colors.black),
+        ),
       ),
 
       darkTheme: ThemeData(
         colorScheme: .fromSeed(
           seedColor: Colors.deepPurple,
           brightness: .dark, //
+        ),
+
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: Color(0xFF141218),
+          contentTextStyle: TextStyle(color: Colors.white),
         ),
       ),
 
