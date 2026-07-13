@@ -46,64 +46,70 @@ class _AppTileState extends State<AppTile> {
   Widget build(BuildContext context) {
     return Padding(
       padding: .fromLTRB(6, 2, 6, 2),
-      child: Container(
-        padding: .all(12),
-        decoration: BoxDecoration(
-          borderRadius: .circular(12),
+      child: GestureDetector(
+        onTap: () => widget.onTapped(),
+        child: Container(
+          padding: .all(12),
+          decoration: BoxDecoration(
+            borderRadius: .circular(12),
 
-          color: Colors.grey[800],
-        ),
-        child: Row(
-          children: [
-            FutureBuilder(
-              future: _appIconFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == .waiting) {
-                  return CircularProgressIndicator();
-                }
+            color: Colors.grey[800],
+          ),
+          child: Row(
+            children: [
+              FutureBuilder(
+                future: _appIconFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == .waiting) {
+                    return CircularProgressIndicator();
+                  }
 
-                if (snapshot.hasData && snapshot.data != null) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return Row(
+                      children: [
+                        Image.memory(snapshot.data!, width: 48, height: 48),
+                        SizedBox(width: 6),
+                      ],
+                    );
+                  }
+
                   return Row(
                     children: [
-                      Image.memory(snapshot.data!, width: 48, height: 48),
+                      Icon(Icons.android, size: 48),
                       SizedBox(width: 6),
                     ],
                   );
-                }
-
-                return Row(
-                  children: [Icon(Icons.android, size: 48), SizedBox(width: 6)],
-                );
-              },
-            ),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Text(
-                    widget.app['appName'],
-                    style: TextStyle(fontSize: 18, fontWeight: .bold),
-                    overflow: .ellipsis,
-                    maxLines: 1,
-                  ),
-
-                  Text(
-                    widget.app['packageName'],
-                    overflow: .ellipsis,
-                    maxLines: 1,
-                  ),
-                ],
+                },
               ),
-            ),
 
-            Switch(
-              value: widget.isInitialyBlocked,
-              onChanged: (value) {
-                widget.onTapped();
-              },
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    Text(
+                      widget.app['appName'],
+                      style: TextStyle(fontSize: 18, fontWeight: .bold),
+                      overflow: .ellipsis,
+                      maxLines: 1,
+                    ),
+
+                    Text(
+                      widget.app['packageName'],
+                      overflow: .ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
+              ),
+
+              Switch(
+                value: widget.isInitialyBlocked,
+                onChanged: (value) {
+                  widget.onTapped();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
