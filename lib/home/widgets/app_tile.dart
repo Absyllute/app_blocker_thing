@@ -53,7 +53,7 @@ class _AppTileState extends State<AppTile> {
           decoration: BoxDecoration(
             borderRadius: .circular(12),
 
-            color: Colors.grey[800],
+            color: Color.fromARGB(255, 47, 47, 47),
           ),
           child: Row(
             children: [
