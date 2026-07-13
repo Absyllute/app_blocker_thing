@@ -1,3 +1,5 @@
+import 'package:app_blocker_thing/home/block_screen.dart';
+import 'package:app_blocker_thing/home/home_screen.dart';
 import 'package:app_blocker_thing/initial_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +11,22 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const new({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+
+    appBlock.initialize(blockScreenCallback: onBlockScreenRequested);
+  }
 
   @override
   Widget build(BuildContext context) {
