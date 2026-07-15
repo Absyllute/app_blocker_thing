@@ -1,0 +1,8 @@
+# flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/abt_all.png"
+  adaptive_icon_background: "assets/icon/abt_background.png" # <-- Point this to your blue gradient image!
+  adaptive_icon_foreground: "assets/icon/abt_foreground.png" # <-- Your black outline image
+  min_sdk_android: 21
